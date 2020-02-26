@@ -10,16 +10,18 @@ import compose from "../../utils/compose";
 class BookList extends Component {
 
     componentDidMount() {
-        const { bookstoreService } = this.props;
+        const { bookstoreService, booksLoaded } = this.props;
 
-        const data = bookstoreService.getBooks();
-
-        this.props.booksLoaded(data);
+        const data = bookstoreService.getBooks().then(data => booksLoaded(data));
 
     }
 
     render() {
-        const { books } = this.props;
+        const { books, loading } = this.props;
+        console.log(loading);
+        if (loading) {
+            return <div>Loading</div>
+        }
 
         return (
             <ul>
@@ -35,8 +37,8 @@ class BookList extends Component {
     }
 }
 
-const mapStateToProps = ({ books }) => {
-    return { books }
+const mapStateToProps = ({ books, loading }) => {
+    return { books, loading }
 };
 
 const mapDispatchToProps = {
