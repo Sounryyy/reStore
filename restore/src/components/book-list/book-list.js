@@ -5,6 +5,7 @@ import BookListItem from "../book-list-item";
 import { booksLoaded } from "../../actions";
 import withBookstoreService from "../hoc"
 import './book-list.css';
+import compose from "../../utils/compose";
 
 class BookList extends Component {
 
@@ -42,6 +43,7 @@ const mapDispatchToProps = {
     booksLoaded
 };
 
-export default withBookstoreService()(
-    connect(mapStateToProps, mapDispatchToProps)(BookList)
-)
+export default compose(
+    withBookstoreService(),
+    connect(mapStateToProps, mapDispatchToProps)
+)(BookList)
